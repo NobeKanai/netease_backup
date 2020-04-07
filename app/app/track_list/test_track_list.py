@@ -1,4 +1,4 @@
-from app.track_list.getter import get_json, get_trackIds
+from .getter import get_json, get_trackIds
 
 
 def test_get():

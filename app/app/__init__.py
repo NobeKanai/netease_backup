@@ -1,5 +1,5 @@
-from app.track_list.getter import get_json, get_trackIds
-from app.track_detail.getter import get_by_ids
+from .track_list import get_json, get_trackIds
+from .track_detail import get_by_ids
 
 
 class PlayListQuery:

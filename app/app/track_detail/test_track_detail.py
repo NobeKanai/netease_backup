@@ -1,4 +1,4 @@
-from app.track_detail.getter import get_by_ids
+from .getter import get_by_ids
 
 
 def test_get_by_ids():
