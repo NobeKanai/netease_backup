@@ -1,4 +1,4 @@
-from utils.music import get_playlist
+from utils.music import get_playlist, get_all_songs
 from config import Config
 import click
 import time
@@ -7,14 +7,25 @@ from models import get_session, Track
 playlist_temp = []
 
 
+def on_add(ret):
+    songs = get_all_songs(Config.BASE_URL, ret)
+    with get_session() as s:
+        for song in songs:
+            t = Track.from_dict(song)
+            s.add(t)
+        s.commit()
+
+
 def compare_list(l1, l2):
-    new_list = [i for i in l1 if i not in l2]
+    s = set(l2)  # 使用set提升查找性能
+    new_list = [i for i in l1 if i not in s]
+
     return new_list
 
 
 def start_loop(playlist_id, callback=None):
     """
-    callback 接受一个vet参数， 保存新增的的歌曲id的列表
+    callback 接受一个ret参数， 保存新增的的歌曲id的列表
     """
     global playlist_temp
 
@@ -22,7 +33,8 @@ def start_loop(playlist_id, callback=None):
     ret = compare_list(playlist_ids, playlist_temp)
 
     if ret:
-        print("[PLAYLIST CHANGE], add follow songs' id to list:", "".join(ret))
+        print("[PLAYLIST CHANGE], add follow songs' id to list:",
+              ", ".join(ret))
         if callback:
             callback(ret)
 
@@ -44,8 +56,8 @@ def main(playlist_id):
 
     print("Starting cycle....")
     while True:
+        start_loop(playlist_id, on_add)
         time.sleep(3600)
-        start_loop(playlist_id)
 
 
 if __name__ == '__main__':

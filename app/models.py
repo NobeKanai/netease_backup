@@ -31,5 +31,7 @@ class Track(Base):
 
     @classmethod
     def from_dict(cls, d):
-        # TODO
-        pass
+        return cls(id=d["id"],
+                   name=d["name"],
+                   author=d.get("author")
+                   or "/".join(map(lambda ar: ar["name"], d["ar"])))

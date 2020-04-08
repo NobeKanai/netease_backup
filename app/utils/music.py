@@ -3,7 +3,7 @@ from .track_detail import get_by_ids
 
 
 def get_playlist(base_url, playlist_id):
-    """ 获取歌单所有的id， 并不包括详情 """
+    """ 获取歌单所有的id， 并不包括详情, id为int类型 """
     r_json = get_json(base_url, playlist_id)
     ids = get_trackIds(r_json)
     return ids
