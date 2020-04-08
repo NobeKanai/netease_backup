@@ -1,6 +1,5 @@
-from .track_list import get_json, get_trackIds
-from .track_detail import get_by_ids
-
+from track_list import get_json, get_trackIds
+from track_detail import get_by_ids
 
 class PlayListQuery:
     def __init__(self, base_url="http://localhost:3000"):
