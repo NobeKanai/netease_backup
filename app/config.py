@@ -6,4 +6,6 @@ load_dotenv(os.path.join(base_dir, ".env"))
 
 
 class Config:
-    SQLALCHEMY_DATABASE_URL = os.environ.get("DATABASE_URL") or "sqlite:///" + os.path.join(base_dir, "app.db")
+    BASE_URL = "http://localhost:3000"
+    SQLALCHEMY_DATABASE_URL = os.environ.get(
+        "DATABASE_URL") or "sqlite:///" + os.path.join(base_dir, "app.db")
