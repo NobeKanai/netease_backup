@@ -15,6 +15,8 @@ def on_add(ret):
             s.add(t)
         s.commit()
 
+    print("已全部提交至数据库")
+
 
 def compare_list(l1, l2):
     s = set(l2)  # 使用set提升查找性能
@@ -33,9 +35,9 @@ def start_loop(playlist_id, callback=None):
     ret = compare_list(playlist_ids, playlist_temp)
 
     if ret:
-        print("[PLAYLIST CHANGE], add follow songs' id to list:",
-              ", ".join(ret))
+        print("[PLAYLIST CHANGE], add %d songs id to list:", len(ret))
         if callback:
+            print("启动回调函数")
             callback(ret)
 
     # 更新playlist_temp
@@ -51,8 +53,9 @@ def init_playlist():
 
 
 @click.command()
-@click.option("-id", "--playlist_id", help="歌单id", type=str)
+@click.option("-id", "--playlist_id", help="歌单id", type=str, required=True)
 def main(playlist_id):
+
     init_playlist()
     global playlist_temp
 

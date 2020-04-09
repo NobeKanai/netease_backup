@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, Column, BigInteger, String
 
 from config import Config
 
-engine = create_engine(Config.SQLALCHEMY_DATABASE_URL, echo=True)
+engine = create_engine(Config.SQLALCHEMY_DATABASE_URL)
 Session = sessionmaker(bind=engine)
 Base = declarative_base(engine)
 
