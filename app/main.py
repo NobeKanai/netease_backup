@@ -45,7 +45,9 @@ def start_loop(playlist_id, callback=None):
 def init_playlist():
     global playlist_temp
     with get_session() as s:
-        playlist_temp = [t.id for t in s.query(Track).all()]
+        playlist_temp = [
+            t[0] for t in s.query(Track).with_entities(Track.id).all()
+        ]
 
 
 @click.command()

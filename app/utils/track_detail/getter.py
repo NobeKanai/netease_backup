@@ -11,7 +11,7 @@ def get_by_ids(baseURL, ids):
     return the json data (list)
     """
     url = baseURL + GET_TRACK_DETAIL
-    params = {"ids": ','.join(ids)}
+    params = {"ids": ','.join([str(i) for i in ids])}
     r = requests.get(url, params=params)
     try:
         data = r.json()
