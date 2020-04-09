@@ -13,17 +13,17 @@ def test_save_model():
         assert t.name == "music name"
         assert t.author == "music author"
 
-        s.query(Track).filter(Track.id == 1).delete()
+        s.delete(t)
         s.commit()
 
 
 def test_callback_func():
-    vet = ["432486477"]
+    vet = [714698]
     on_add(vet)
     with get_session() as s:
-        track = s.query(Track).filter(Track.id == 432486477).first()
-        assert track.name == "ライアーダンス"
-        assert track.author == "DECO*27/初音ミク"
+        track = s.query(Track).filter(Track.id == 714698).first()
+        assert track.name == "冥界夜桜"
+        assert track.author == "dBu music"
 
         s.delete(track)
         s.commit()

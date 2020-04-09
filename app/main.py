@@ -1,8 +1,12 @@
 from utils.music import get_playlist, get_all_songs
+from models import get_session, Track
 from config import Config
 import click
 import time
-from models import get_session, Track
+
+# log
+import logging
+logging.basicConfig(level=logging.INFO)
 
 playlist_temp = []
 
@@ -15,7 +19,7 @@ def on_add(ret):
             s.add(t)
         s.commit()
 
-    print("已全部提交至数据库")
+    logging.info("All data saved to database.")
 
 
 def compare_list(l1, l2):
@@ -35,9 +39,9 @@ def start_loop(playlist_id, callback=None):
     ret = compare_list(playlist_ids, playlist_temp)
 
     if ret:
-        print("[PLAYLIST CHANGE], add %d songs id to list:", len(ret))
+        logging.info(f"PLAYLIST CHANGE, add {len(ret)} songs id to list:")
         if callback:
-            print("启动回调函数")
+            logging.info("starting callback func....")
             callback(ret)
 
     # 更新playlist_temp
@@ -59,7 +63,7 @@ def main(playlist_id):
     init_playlist()
     global playlist_temp
 
-    print("Starting cycle....")
+    logging.info("Starting cycle....")
     while True:
         start_loop(playlist_id, on_add)
         time.sleep(3600)
