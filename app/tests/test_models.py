@@ -5,13 +5,17 @@ from main import on_add
 
 def test_save_model():
     with get_session() as s:
-        track = Track(id=1, name="music name", author="music author")
+        track = Track(id=1,
+                      name="music name",
+                      author="music author",
+                      album="music album")
         s.add(track)
         s.commit()
 
         t = s.query(Track).filter(Track.id == 1).first()
         assert t.name == "music name"
         assert t.author == "music author"
+        assert t.album == "music album"
 
         s.delete(t)
         s.commit()

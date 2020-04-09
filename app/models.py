@@ -28,10 +28,12 @@ class Track(Base):
     id = Column(BigInteger, primary_key=True)
     name = Column(String(128))
     author = Column(String(128))
+    album = Column(String(128))
 
     @classmethod
     def from_dict(cls, d):
         return cls(id=d["id"],
                    name=d["name"],
                    author=d.get("author")
-                   or "/".join(map(lambda ar: ar["name"], d["ar"])))
+                   or "/".join(map(lambda ar: ar["name"], d["ar"])),
+                   album=d.get("album") or d["al"]["name"])
