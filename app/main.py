@@ -58,7 +58,8 @@ def init_playlist():
 
 @click.command()
 @click.option("-id", "--playlist_id", help="歌单id", type=str, required=True)
-def main(playlist_id):
+@click.option("-t", "--time_interval", help="查询间隔, 默认3600(一个小时)", type=int)
+def main(playlist_id, time_interval):
 
     init_playlist()
     global playlist_temp
@@ -66,7 +67,7 @@ def main(playlist_id):
     logging.info("Starting cycle....")
     while True:
         start_loop(playlist_id, on_add)
-        time.sleep(3600)
+        time.sleep(time_interval or 3600)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import requests
+from config import Config
 
-GET_TRACK_DETAIL = "/song/detail"
 
 
 def get_by_ids(baseURL, ids):
@@ -10,7 +10,7 @@ def get_by_ids(baseURL, ids):
 
     return the json data (list)
     """
-    url = baseURL + GET_TRACK_DETAIL
+    url = baseURL + Config.TRACK_DETAIL_API
     params = {"ids": ','.join([str(i) for i in ids])}
     r = requests.get(url, params=params)
     try:
