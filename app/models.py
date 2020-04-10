@@ -26,9 +26,9 @@ def get_session():
 class Track(Base):
     __tablename__ = "track"
     id = Column(BigInteger, primary_key=True)
-    name = Column(String(256))
-    author = Column(String(512))
-    album = Column(String(256))
+    name = Column(String(128))
+    author = Column(String(128))
+    album = Column(String(128))
 
     @classmethod
     def from_dict(cls, d):
