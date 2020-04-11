@@ -1,0 +1,36 @@
+version: 3
+
+services:
+
+    myapp:
+        depends_on:
+            - mysql
+        build: ./app
+        links: 
+            - mysql:mysql-server
+        environment: 
+            - DATABASE_URL=...
+
+    myapi:
+        depends_on:
+            - myapp
+        build: ./api
+        links: 
+            - mysql:mysql-server
+        ports: 
+            - 50007:5000  # NOTICE THAT: use port 50007 instead of 5000
+        environment: 
+            - DATABASE_URL=...
+
+    mysql:
+        image: mysql: 5.6
+        environment: 
+            - MYSQL_ROOT_PASSWORD=rootpassword   # change this place
+            - MYSQL_DATABASE=kanai
+            - MYSQL_USER=usename
+            - MYSQL_PASSWORD=password
+        ports: 
+            - 127.0.0.1:3306:3306
+        volumes: 
+            - $PWD/docker/mysql/conf.d:/etc/mysql/conf.d
+            - $PWD/docker/mysql/data:/var/lib/mysql
