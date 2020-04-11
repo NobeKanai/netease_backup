@@ -66,7 +66,7 @@ def main(playlist_id, time_interval):
 
     logging.info("Starting cycle....")
     while True:
-        start_loop(playlist_id, on_add)
+        start_loop(playlist_id or Config.PLAYLIST_ID, on_add)
         time.sleep(time_interval or 3600)
 
 

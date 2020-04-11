@@ -9,11 +9,10 @@ services:
     links:
       - mysql:mysql-server
       - api:netease-api
-    command: python main.py -id 751269939
     environment:
-      - DATABASE_URL=mysql+pymysql://root:akinakanai@mysql-server/kanai?charset=utf8mb4 # change this place and follows
+      - DATABASE_URL=mysql+pymysql://root:password@mysql-server/kanai?charset=utf8mb4 # database
       - BASE_URL=http://netease-api:3000
-      # - PLAYLIST_ID=751269939
+      - PLAYLIST_ID=751269939 # 歌单id
 
   myweb:
     depends_on:
@@ -24,20 +23,20 @@ services:
     ports:
       - 50007:5000 # NOTICE THAT: use port 50007 instead of 5000
     environment:
-      - DATABASE_URL=mysql+pymysql://root:akinakanai@mysql-server/kanai?charset=utf8mb4 # change this place
+      - DATABASE_URL=mysql+pymysql://root:password@mysql-server/kanai?charset=utf8mb4 # change this place
 
   mysql:
     image: mysql:5.6
     environment:
-      - MYSQL_ROOT_PASSWORD=akinakanai # change this place
+      - MYSQL_ROOT_PASSWORD=password # change this place
       - MYSQL_DATABASE=kanai # andt this place
       # - MYSQL_USER=usename
       # - MYSQL_PASSWORD=password
     ports:
       - 127.0.0.1:3306:3306
     volumes:
-      - D:/docker/mysql/conf.d:/etc/mysql/conf.d # and this place
-      - D:/docker/mysql/data:/var/lib/mysql # this place
+      - $PWD/docker/mysql/conf.d:/etc/mysql/conf.d # and this place
+      - $PWD/docker/mysql/data:/var/lib/mysql # this place
 
   api:
     image: binaryify/netease_cloud_music_api
