@@ -57,7 +57,7 @@ def init_playlist():
 
 
 @click.command()
-@click.option("-id", "--playlist_id", help="歌单id", type=str, required=True)
+@click.option("-id", "--playlist_id", help="歌单id", type=str)
 @click.option("-t", "--time_interval", help="查询间隔, 默认3600(一个小时)", type=int)
 def main(playlist_id, time_interval):
 

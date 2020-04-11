@@ -6,7 +6,7 @@ load_dotenv(os.path.join(base_dir, ".env"))
 
 
 class Config:
-    BASE_URL = "http://localhost:3000"  # api地址
+    BASE_URL = os.environ.get("BASE_URL") or "http://localhost:3000"  # api地址
     SQLALCHEMY_DATABASE_URL = os.environ.get(
         "DATABASE_URL") or "sqlite:///" + os.path.join(base_dir, "app.db")
 
@@ -14,3 +14,5 @@ class Config:
         "PLAYLIST_GET_API") or "/playlist/detail"  # api 获取歌单全部歌曲id
     TRACK_DETAIL_API = os.environ.get(
         "TRACK_DETAIL_API") or "/song/detail"  # api 获取音乐详情
+
+    PLAYLIST_ID = os.environ.get("PLAYLIST_ID")
