@@ -1,36 +1,41 @@
-version: 3
+version: "3"
 
 services:
+  myapp:
+    depends_on:
+      - mysql
+      - api
+    build: ./app
+    links:
+      - mysql:mysql-server
+    environment:
+      - DATABASE_URL=mysql+pymysql://root:password@mysql-server/kanai?charset=utf8mb4 # change this place
 
-    myapp:
-        depends_on:
-            - mysql
-        build: ./app
-        links: 
-            - mysql:mysql-server
-        environment: 
-            - DATABASE_URL=...
+  myweb:
+    depends_on:
+      - myapp
+    build: ./web
+    links:
+      - mysql:mysql-server
+    ports:
+      - 50007:5000 # NOTICE THAT: use port 50007 instead of 5000
+    environment:
+      - DATABASE_URL=mysql+pymysql://root:password@mysql-server/kanai?charset=utf8mb4 # change this place
 
-    myapi:
-        depends_on:
-            - myapp
-        build: ./api
-        links: 
-            - mysql:mysql-server
-        ports: 
-            - 50007:5000  # NOTICE THAT: use port 50007 instead of 5000
-        environment: 
-            - DATABASE_URL=...
+  mysql:
+    image: mysql:5.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=kanai # change this place
+      - MYSQL_DATABASE=password # andt this place
+      # - MYSQL_USER=usename
+      # - MYSQL_PASSWORD=password
+    ports:
+      - 127.0.0.1:3306:3306
+    volumes:
+      - $PWD/mysql/conf.d:/etc/mysql/conf.d # and this place
+      - $PWD/docker/mysql/data:/var/lib/mysql # this place
 
-    mysql:
-        image: mysql: 5.6
-        environment: 
-            - MYSQL_ROOT_PASSWORD=rootpassword   # change this place
-            - MYSQL_DATABASE=kanai
-            - MYSQL_USER=usename
-            - MYSQL_PASSWORD=password
-        ports: 
-            - 127.0.0.1:3306:3306
-        volumes: 
-            - $PWD/docker/mysql/conf.d:/etc/mysql/conf.d
-            - $PWD/docker/mysql/data:/var/lib/mysql
+  api:
+    image: binaryify/netease_cloud_music_api
+    ports:
+      - 127.0.0.1:3000:3000
