@@ -6,7 +6,7 @@ import axios from "axios";
 Vue.config.productionTip = false;
 
 axios.defaults.baseURL =
-  window.location.protocol + "//" + window.location.hostname + ":5000";
+  window.location.protocol + "//" + window.location.hostname + ":50007";
 Vue.prototype.$axios = axios;
 
 new Vue({
