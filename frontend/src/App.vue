@@ -1,53 +1,37 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-      class="px-5"
-    >
-      <div class="d-flex align-center">
-        <h2 class="font-weight-regular">MyMusciList</h2>
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn
-            href="https://github.com/NobeKanai/netease_backup"
-            target="_blank"
-            text
-            icon
-            v-on="on"
-          >
-            <v-icon>mdi-github</v-icon>
-          </v-btn>
-        </template>
-        <span>
-          GitHub
-        </span>
-      </v-tooltip>
-    </v-app-bar>
-
-    <v-content>
-      <HelloWorld />
-    </v-content>
-  </v-app>
+  <div id="app">
+    <mu-appbar title="MyMusicList" text-color="#fff">
+      <mu-tooltip content="GitHub" slot="right">
+        <mu-button
+          icon
+          href="https://github.com/NobeKanai/netease_backup"
+          target="_blank"
+        >
+          <mu-icon value=":fab fa-github"></mu-icon>
+        </mu-button>
+      </mu-tooltip>
+    </mu-appbar>
+    <hello-world></hello-world>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
-
 export default {
   name: "App",
-
   components: {
-    HelloWorld
-  },
-
-  data: () => ({
-    //
-  })
+    HelloWorld: () => import("./components/HelloWorld")
+  }
 };
 </script>
+
+<style lang="sass">
+#app
+  color: #fff
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("https://i.loli.net/2020/04/12/KhwRBueHkg3Vlps.jpg")
+  background-position: center
+  background-repeat: no-repeat
+  background-attachment: fixed
+  header
+    background-color: rgba(255,255,255,0.2)
+    backdrop-filter: blur(10px)
+</style>
